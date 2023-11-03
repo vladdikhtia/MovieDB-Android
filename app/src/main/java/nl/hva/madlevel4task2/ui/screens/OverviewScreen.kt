@@ -46,6 +46,7 @@ import nl.hva.madlevel4task2.data.model.ListOfMovies
 import nl.hva.madlevel4task2.viewModel.MoviesViewModel
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
@@ -114,25 +115,27 @@ fun OverviewScreen(viewModel : MoviesViewModel, navigateToDetailScreen: () -> Un
 
 @Composable
 fun MoviePoster(url : String, onClick : () -> Unit) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .memoryCachePolicy(CachePolicy.ENABLED)
-            .build(),
-        contentDescription = url,
-        modifier = Modifier
-            .padding(top = 8.dp)
-            .width(350.dp)
-            .height(250.dp)
-            .clickable { onClick() },
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(url)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .build(),
+            contentDescription = url,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                .width(350.dp)
+                .height(250.dp)
+                .clickable { onClick() },
 
-    )
+            )
 
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(viewModel : MoviesViewModel) {
+
     val searchQueryState = rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
     }

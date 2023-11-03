@@ -7,6 +7,7 @@ import nl.hva.madlevel4task2.data.api.MoviesApi
 import nl.hva.madlevel4task2.data.api.util.Resource
 import nl.hva.madlevel4task2.data.model.ListOfMovies
 import nl.hva.madlevel4task2.data.model.Movie
+import retrofit2.http.Query
 
 class MovieRepository {
 
@@ -18,10 +19,10 @@ class MovieRepository {
      * @return result wrapped in our own Resource sealed class
      */
 
-    suspend fun getMovies(): Resource<ListOfMovies>{
+    suspend fun getMovies(query : String): Resource<ListOfMovies>{
         val response = try {
             withTimeout(5_000){
-                moviesApiService.getMovies()
+                moviesApiService.getMovies(query)
             }
         } catch (e : Exception){
             Log.e("MovieRepository", e.message ?: "No exception message available")

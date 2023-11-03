@@ -1,16 +1,16 @@
 package nl.hva.madlevel4task2.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import nl.hva.madlevel4task2.data.api.util.Resource
 import nl.hva.madlevel4task2.data.model.ListOfMovies
+import nl.hva.madlevel4task2.data.model.Movie
 import nl.hva.madlevel4task2.repository.MovieRepository
 
-class MovieViewModel(application : Application) : AndroidViewModel(application) {
+class MoviesViewModel:ViewModel() {
 
     //reference to the MovieRepository()
     private val movieRepository = MovieRepository()
@@ -30,12 +30,15 @@ class MovieViewModel(application : Application) : AndroidViewModel(application) 
      * The viewModelScope is bound to Dispatchers.Main and will automatically be cancelled when the ViewModel is cleared.
      * Extension method of lifecycle-viewmodel-ktx library
      */
-    fun getMovie(){
+    fun getMovie(query : String){
         //set resource type to loading
         _movieResource.value = Resource.Loading()
 
         viewModelScope.launch {
-            _movieResource.value = movieRepository.getMovies()
+            _movieResource.value = movieRepository.getMovies(query)
         }
     }
+    var selectedMovie: Movie? = null
+        internal set
+
 }

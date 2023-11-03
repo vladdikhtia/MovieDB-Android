@@ -18,4 +18,7 @@ data class Movie(
     val overview: String,
     @SerializedName("vote_average")
     val vote_average: Double,
+    @SerializedName("include_adult")
+    private val include_adult: Boolean = false
+
 )

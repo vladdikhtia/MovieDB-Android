@@ -1,7 +1,6 @@
 package nl.hva.madlevel4task2.data.api
 
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,7 +10,6 @@ class MoviesApi {
     companion object {
 
         private const val baseUrl = "https://api.themoviedb.org/3/"
-
         fun createApi(): ApiService {
             // Create an OkHttpClient to be able to make a log of the network traffic
 

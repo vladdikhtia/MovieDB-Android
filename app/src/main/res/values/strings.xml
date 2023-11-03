@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">MadLevel4Task2</string>
-    <string name="search_movie_hint">Search movie</string>
+    <string name="search_for_movie">Search for movies!</string>
+    <string name="overview">Overview</string>
+    <string name="empty_number_placeholder">Click to get movies!</string>
+    <string name="loading_text">Loading ...</string>
+    <string name="something_wrong_state">Something went wrong</string>
+    <string name="search_query_cannot_be_empty">Search query can\'t be empty!</string>
+    <string name="search_movie_hint">Search for a movie by name</string>
 </resources>
