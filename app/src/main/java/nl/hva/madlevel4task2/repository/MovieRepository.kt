@@ -6,8 +6,6 @@ import nl.hva.madlevel4task2.data.api.ApiService
 import nl.hva.madlevel4task2.data.api.MoviesApi
 import nl.hva.madlevel4task2.data.api.util.Resource
 import nl.hva.madlevel4task2.data.model.ListOfMovies
-import nl.hva.madlevel4task2.data.model.Movie
-import retrofit2.http.Query
 
 class MovieRepository {
 

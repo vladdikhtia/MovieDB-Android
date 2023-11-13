@@ -1,8 +1,7 @@
 package nl.hva.madlevel4task2.ui.screens
 
-import android.view.RoundedCorner
+import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,7 +43,6 @@ import nl.hva.madlevel4task2.data.api.util.Resource
 import nl.hva.madlevel4task2.data.model.ListOfMovies
 import nl.hva.madlevel4task2.viewModel.MoviesViewModel
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
@@ -57,7 +54,6 @@ import nl.hva.madlevel4task2.data.model.Movie
 fun OverviewScreen(viewModel : MoviesViewModel, navigateToDetailScreen: () -> Unit) {
 
     val movieResource : Resource<ListOfMovies>? by viewModel.movieResource.observeAsState()
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -71,7 +67,7 @@ fun OverviewScreen(viewModel : MoviesViewModel, navigateToDetailScreen: () -> Un
                 LazyVerticalGrid(
                     modifier = Modifier
                         .background(Color.LightGray)
-                        .align(Alignment.CenterHorizontally),
+                        .align(CenterHorizontally),
                     columns = GridCells.Fixed(2),
                     content = {
                         val movies : List<Movie>? = movieResource?.data?.results
@@ -136,6 +132,8 @@ fun MoviePoster(url : String, onClick : () -> Unit) {
 @Composable
 fun SearchView(viewModel : MoviesViewModel) {
 
+    var context = LocalContext.current
+
     val searchQueryState = rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
     }
@@ -152,7 +150,11 @@ fun SearchView(viewModel : MoviesViewModel) {
         textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
         leadingIcon = {
             IconButton(onClick = {
+                if (!searchQueryState.value.text.isNullOrEmpty()){
                     viewModel.getMovie(searchQueryState.value.text)
+                } else {
+                    Toast.makeText(context, R.string.search_for_movie, Toast.LENGTH_SHORT).show()
+                }
 
                 //based on @ExperimentalComposeUiApi - if this doesn't work in a newer version remove it
                 //no alternative in compose for hiding keyboard at time of writing
